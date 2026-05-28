@@ -86,15 +86,24 @@
         <label>¿Qué tipo de empresa prefieres? (puedes elegir varias)</label>
         <div class="opciones" id="opciones-intereses">
           <div class="opcion" onclick="toggleMultiple('intereses', 'Desarrollo web', this)">Desarrollo web</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Desarrollo móvil', this)">Desarrollo móvil</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Sistemas y redes', this)">Sistemas y redes</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Ciberseguridad', this)">Ciberseguridad</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Base de datos', this)">Base de datos</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Cloud', this)">Cloud</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'IA y datos', this)">IA y datos</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Soporte técnico', this)">Soporte técnico</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Administración', this)">Administración</div>
-          <div class="opcion" onclick="toggleMultiple('intereses', 'Diseño', this)">Diseño</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Desarrollo móvil', this)">Desarrollo móvil</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Sistemas y redes', this)">Sistemas y redes</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Ciberseguridad', this)">Ciberseguridad</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Base de datos', this)">Base de datos</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Cloud', this)">Cloud</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'IA y datos', this)">IA y datos</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Soporte técnico', this)">Soporte técnico</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Administración', this)">Administración</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Diseño', this)">Diseño</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Marketing digital', this)">Marketing digital</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Redes sociales', this)">Redes sociales</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Logística', this)">Logística</div>
+<div class="opcion" onclick="toggleMultiple('intereses', 'Ventas', this)">Ventas</div>
+<div class="opcion" id="opcion-otros" onclick="toggleOtros(this)">Otros</div>
+       <div id="campo-otros-interes" style="display:none; margin-top:8px">
+  <input type="text" id="otros-interes" placeholder="Escribe tu preferencia..."
+    style="width:100%; padding:9px 12px; border-radius:6px; border:1px solid #ddd; font-size:14px; font-family:sans-serif" />
+</div>
         </div>
       </div>
       <div class="campo">
@@ -229,9 +238,21 @@
       else arr.splice(idx, 1)
       el.classList.toggle('activo', arr.includes(valor))
     }
+    function toggleOtros(el) {
+  const campo = document.getElementById('campo-otros-interes')
+  const visible = campo.style.display !== 'none'
+  campo.style.display = visible ? 'none' : 'block'
+  el.classList.toggle('activo', !visible)
+  if (visible) datos.intereses = datos.intereses.filter(i => !i.startsWith('Otros:'))
+}
 
     async function enviar() {
       datos.descripcion_experiencia = document.getElementById('descripcion_experiencia').value.trim()
+      const otrosInteres = document.getElementById('otros-interes').value.trim()
+if (otrosInteres && document.getElementById('opcion-otros').classList.contains('activo')) {
+  datos.intereses = datos.intereses.filter(i => !i.startsWith('Otros:'))
+  datos.intereses.push(`Otros: ${otrosInteres}`)
+}
       datos.zona_residencia = document.getElementById('zona_residencia').value
 
       const errorEl = document.getElementById('error-msg')
